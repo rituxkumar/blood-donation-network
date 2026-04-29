@@ -1,20 +1,20 @@
+import Link from "next/link";
 const Navbar = () => {
   return (
     <nav className="w-full bg-white shadow-md px-6 py-4 flex justify-between items-center">
-      
       {/* Left side - Logo */}
-      <h1 className="text-xl font-bold text-red-600">
-        BloodConnect
-      </h1>
+      <Link href="/"><h1 className="text-xl font-bold text-red-600">BloodConnect</h1></Link>
+      
 
       {/* Right side - Buttons */}
       <div className="space-x-4">
-        <button className="text-gray-700">Login</button>
-        <button className="bg-red-600 text-white px-4 py-2 rounded">
-          Register
-        </button>
+        <Link href="/login"><button  className="px-5 py-2 rounded-full bg-red-600 text-white">Login</button></Link>
+        {/* <Link href="/register">
+          <button className="px-5 py-2 rounded-full bg-red-600 text-white">
+            Register
+          </button>
+        </Link> */}
       </div>
-
     </nav>
   );
 };
