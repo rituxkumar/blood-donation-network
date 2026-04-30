@@ -1,146 +1,242 @@
 "use client";
-import Link from "next/link";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaPhone,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    contactNumbers: [""],
+    address: "",
+    location: "",
+    image: null as any,
   });
 
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
-  // handle input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputStyle =
+    "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 transition";
+
+  // handle input
+  const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // handle submit
-  const handleSubmit = (e: React.FormEvent) => {
+  // phone change
+  const handlePhoneChange = (value: string, index: number) => {
+    const updated = [...form.contactNumbers];
+    updated[index] = value;
+    setForm({ ...form, contactNumbers: updated });
+  };
+
+  // add phone
+  const addPhone = () => {
+    setForm({
+      ...form,
+      contactNumbers: [...form.contactNumbers, ""],
+    });
+  };
+
+  // upload image
+  const uploadImage = async (file: File) => {
+    setUploading(true);
+    console.log("img");
+
+    const data = new FormData();
+    data.append("file", file);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: data,
+    });
+
+    const result = await res.json();
+    setUploading(false);
+    console.log("res", result);
+
+    return result;
+  };
+
+  // submit
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
-    if (!form.username || !form.email || !form.password || !form.confirmPassword) {
-      return setError("All fields are required");
-    }
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      body: JSON.stringify(form),
+    });
 
-    if (form.password !== form.confirmPassword) {
-      return setError("Passwords do not match");
-    }
+    const data = await res.json();
+    setLoading(false);
 
-    setError("");
-    console.log("Form Data:", form);
-
-    // 👉 future: API call here
+    alert(data.success ? "Signup successful 🚀" : data.error);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-red-50 px-4">
-      
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-red-50 px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-white shadow-2xl border border-gray-100 p-8 rounded-2xl"
+        className="w-full max-w-xl bg-white shadow-xl rounded-3xl p-8 border"
       >
-        
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-gray-900 text-center">
-          Create Account 🩸
+        <h2 className="text-3xl font-bold text-center text-gray-900">
+          Create Hospital Account 🏥
         </h2>
 
-        <p className="text-gray-500 text-center mt-2">
-          Join us and start saving lives
-        </p>
-
-        {/* ERROR MESSAGE */}
-        {error && (
-          <p className="text-red-500 text-sm mt-4 text-center">{error}</p>
-        )}
-
-        {/* FORM */}
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-          
-          {/* Username */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Username
-            </label>
+          {/* NAME */}
+          <div className="relative">
+            <FaUser className="absolute top-4 left-3 text-gray-400" />
             <input
-              type="text"
-              name="username"
-              value={form.username}
+              name="name"
+              placeholder="Hospital Name"
               onChange={handleChange}
-              placeholder="Enter your username"
-              className="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+              className={inputStyle}
             />
           </div>
 
-          {/* Email */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Email
-            </label>
+          {/* EMAIL */}
+          <div className="relative">
+            <FaEnvelope className="absolute top-4 left-3 text-gray-400" />
             <input
-              type="email"
               name="email"
-              value={form.email}
+              type="email"
+              placeholder="Email"
               onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+              className={inputStyle}
             />
           </div>
 
-          {/* Password */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Password
-            </label>
+          {/* PASSWORD */}
+          <div className="relative">
+            <FaLock className="absolute top-4 left-3 text-gray-400" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
-              value={form.password}
+              placeholder="Password"
               onChange={handleChange}
-              placeholder="Enter your password"
-              className="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+              className={inputStyle}
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-4 right-3 cursor-pointer"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
-          {/* Confirm Password */}
+          {/* PHONE NUMBERS */}
           <div>
-            <label className="text-sm font-medium text-gray-700">
-              Confirm Password
+            <label className="text-sm font-medium text-black">
+              Contact Numbers
             </label>
+
+            <div className="space-y-2 mt-2">
+              {form.contactNumbers.map((phone, i) => (
+                <div key={i} className="relative">
+                  <FaPhone className="absolute top-4 left-3 text-gray-400" />
+                  <input
+                    value={phone}
+                    onChange={(e) => handlePhoneChange(e.target.value, i)}
+                    placeholder="Enter number"
+                    className={inputStyle}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={addPhone}
+              className="text-red-500 text-sm mt-2 hover:underline"
+            >
+              + Add another number
+            </button>
+          </div>
+
+          {/* ADDRESS */}
+          <div className="relative">
+            <FaMapMarkerAlt className="absolute top-4 left-3 text-gray-400" />
             <input
-              type="password"
-              name="confirmPassword"
-              value={form.confirmPassword}
+              name="address"
+              placeholder="Address"
               onChange={handleChange}
-              placeholder="Confirm your password"
-              className="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+              className={inputStyle}
             />
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg hover:scale-105 transition"
-          >
-            Register
-          </button>
-        </form>
+          {/* LOCATION */}
+          <div className="relative">
+            <FaMapMarkerAlt className="absolute top-4 left-3 text-gray-400" />
+            <input
+              name="location"
+              placeholder="Google Map Link"
+              onChange={handleChange}
+              className={inputStyle}
+            />
+          </div>
 
-        {/* Login Link */}
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Already have an account?{" "}
-          <Link href="/login">
-          <span className="text-red-500 cursor-pointer font-medium hover:underline">
-            Login
-          </span>
-          </Link>
-        </p>
+          {/* IMAGE */}
+          <div>
+            <label className="text-sm font-medium text-black">
+              Upload Hospital Image
+            </label>
+
+            <input
+              type="file"
+              className="mt-2 text-black"
+              onChange={async (e: any) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const uploaded = await uploadImage(file);
+
+                setForm((prev: any) => ({
+                  ...prev,
+                  image: {
+                    url: uploaded.url,
+                    public_id: uploaded.fileId,
+                  },
+                }));
+              }}
+            />
+
+            {uploading && (
+              <p className="text-sm text-gray-500 mt-2 ">Uploading...</p>
+            )}
+
+            {form.image?.url && (
+              <img
+                src={form.image.url}
+                className="w-24 h-24 object-cover rounded-xl mt-3 border shadow"
+              />
+            )}
+          </div>
+
+          {/* BUTTON */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            disabled={loading}
+            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg"
+          >
+            {loading ? "Creating..." : "Create Account"}
+          </motion.button>
+        </form>
       </motion.div>
     </div>
   );
