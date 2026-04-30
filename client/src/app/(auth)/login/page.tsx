@@ -1,90 +1,119 @@
 "use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { motion } from "framer-motion";
-
 export default function LoginPage() {
+  const router = useRouter();
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const inputStyle =
+    "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 transition";
+
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (data.success) {
+      // store token
+      localStorage.setItem("token", data.token);
+
+      alert("Login successful 🚀");
+
+      // redirect
+      router.push("/dashboard");
+    } else {
+      alert(data.error);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-red-50 px-4">
-      
-      {/* LOGIN CARD */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-red-50 px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-white shadow-2xl border border-gray-100 p-8 rounded-2xl"
+        className="w-full max-w-md bg-white shadow-xl rounded-3xl p-8 border"
       >
-        
-        {/* TITLE */}
-        <h2 className="text-2xl font-bold text-gray-900 text-center">
-          Welcome Back ❤️
+        <h2 className="text-3xl font-bold text-center text-gray-900">
+          Hospital Login 🔐
         </h2>
 
-        <p className="text-gray-500 text-center mt-2">
-          Login to continue saving lives
-        </p>
-
-        {/* FORM */}
-        <form className="mt-6 space-y-5">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           
           {/* EMAIL */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Email
-            </label>
+          <div className="relative">
+            <FaEnvelope className="absolute top-4 left-3 text-gray-400" />
             <input
+              name="email"
               type="email"
-              placeholder="Enter your email"
-              className="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+              placeholder="Email"
+              onChange={handleChange}
+              className={inputStyle}
             />
           </div>
 
           {/* PASSWORD */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Password
-            </label>
+          <div className="relative">
+            <FaLock className="absolute top-4 left-3 text-gray-400" />
             <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full mt-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              className={inputStyle}
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-4 right-3 cursor-pointer"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
-          {/* FORGOT PASSWORD */}
-          <div className="text-right text-sm text-red-500 cursor-pointer hover:underline">
-            Forgot password?
-          </div>
-
-          {/* LOGIN BUTTON */}
-          <button 
-            type="submit"
-            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg hover:scale-105 transition"
+          {/* BUTTON */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            disabled={loading}
+            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg"
           >
-            Login
-          </button>
+            {loading ? "Logging in..." : "Login"}
+          </motion.button>
         </form>
-
-        {/* DIVIDER */}
-        <div className="flex items-center my-6">
-          <div className="flex-1 h-px bg-gray-300"></div>
-          <span className="px-3 text-gray-400 text-sm">OR</span>
-          <div className="flex-1 h-px bg-gray-300"></div>
-        </div>
-
-        {/* GOOGLE BUTTON */}
-        <button className="w-full border border-gray-200 py-3 rounded-lg bg-white hover:bg-gray-100 transition font-medium text-gray-700">
-          Continue with Google
-        </button>
-
-        {/* REGISTER LINK */}
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Don’t have an account?{" "}
-          <Link href="/register"><span className="text-red-500 cursor-pointer font-medium hover:underline">
-            Register
-          </span></Link>
-          
-        </p>
+        <p className="text-center text-sm text-gray-600 mt-6">
+  Don’t have an account?{" "}
+  <Link
+    href="/register"
+    className="text-red-600 font-semibold hover:underline"
+  >
+    Register
+  </Link>
+</p>
       </motion.div>
     </div>
   );

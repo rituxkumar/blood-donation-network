@@ -11,6 +11,7 @@ import {
   FaPhone,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -237,6 +238,15 @@ export default function RegisterPage() {
             {loading ? "Creating..." : "Create Account"}
           </motion.button>
         </form>
+        <p className="text-center text-sm text-gray-600 mt-6">
+  Have an account?{" "}
+  <Link
+    href="/login"
+    className="text-red-600 font-semibold hover:underline"
+  >
+   Login
+  </Link>
+</p>
       </motion.div>
     </div>
   );
