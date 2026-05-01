@@ -1,24 +1,24 @@
 import mongoose, { Schema } from "mongoose";
 
-const requestSchema = new Schema({
-  hospital: {
-    type: Schema.Types.ObjectId,
-    ref: "Hospital",
-  },
+const requestSchema = new Schema(
+  {
+    bloodGroup: String,
+    units: Number,
+    urgency: String,
 
-  bloodGroup: String,
-  units: Number,
+    status: {
+      type: String,
+      default: "pending",
+    },
 
-  urgency: {
-    type: String,
-    enum: ["normal", "emergency"],
+   
+    hospitalId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Hospital",
+    },
   },
-
-  status: {
-    type: String,
-    default: "pending",
-  },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 export default mongoose.models.Request ||
   mongoose.model("Request", requestSchema);
