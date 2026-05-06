@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FaBell, FaSignOutAlt, FaUser, FaSun, FaMoon } from "react-icons/fa";
+import { FaBell, FaSignOutAlt, FaUser, FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
 import { io } from "socket.io-client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -18,6 +18,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -63,8 +64,8 @@ const Navbar = () => {
         </h1>
       </Link>
 
-      {/* Right side - Buttons */}
-      <div className="space-x-6 flex items-center">
+      {/* Right side - Desktop Menu */}
+      <div className="hidden md:flex items-center space-x-6">
         <Link href="/education" className="text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 font-bold transition">
           Why Donate?
         </Link>
@@ -95,7 +96,6 @@ const Navbar = () => {
                 )}
               </button>
 
-              {/* DROPDOWN */}
               <AnimatePresence>
                 {showDropdown && (
                   <motion.div
@@ -165,6 +165,78 @@ const Navbar = () => {
           </div>
         )}
       </div>
+
+      {/* MOBILE MENU TOGGLE */}
+      <div className="flex items-center gap-4 md:hidden">
+        {mounted && (
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 rounded-xl bg-gray-100 dark:bg-white/5 text-gray-800 dark:text-yellow-400"
+          >
+            {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
+          </button>
+        )}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="p-2 text-gray-600 dark:text-white cursor-pointer"
+        >
+          {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        </button>
+      </div>
+
+      {/* MOBILE MENU OVERLAY */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            className="fixed inset-0 top-[73px] bg-white dark:bg-[#0a0a0a] z-40 p-8 flex flex-col gap-6 md:hidden"
+          >
+            <Link 
+              href="/education" 
+              onClick={() => setIsMenuOpen(false)}
+              className="text-2xl font-black text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4"
+            >
+              Why Donate?
+            </Link>
+
+            {isLoggedIn ? (
+              <>
+                <Link 
+                  href={localStorage.getItem("role") === "donor" ? "/donor-dashboard" : "/dashboard"} 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-2xl font-black text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest text-center"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <div className="flex flex-col gap-4 mt-4">
+                <Link href="/donor-login" onClick={() => setIsMenuOpen(false)}>
+                  <button className="w-full py-4 rounded-2xl border-2 border-red-600 text-red-600 font-black uppercase tracking-widest">
+                    Donor Login
+                  </button>
+                </Link>
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  <button className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-lg">
+                    Hospital Login
+                  </button>
+                </Link>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
