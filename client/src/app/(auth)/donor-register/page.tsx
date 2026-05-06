@@ -10,6 +10,7 @@ import {
   FaPhone,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import Link from "next/link";
 
 export default function DonorRegister() {
   const router = useRouter();
@@ -24,9 +25,6 @@ export default function DonorRegister() {
   });
 
   const [loading, setLoading] = useState(false);
-
-  const inputStyle =
-    "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 transition";
 
   const handleChange = (e: any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -58,72 +56,78 @@ export default function DonorRegister() {
   };
 
   return (
-    <div className= "text-black min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-red-50 to-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-red-100 dark:from-[#0a0a0a] dark:via-[#111] dark:to-red-950/10 px-4 py-12 transition-colors duration-500">
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-8 border"
+        className="w-full max-w-xl bg-white dark:bg-white/5 shadow-2xl dark:shadow-none rounded-[2.5rem] p-8 md:p-12 border border-gray-100 dark:border-white/5 backdrop-blur-xl"
       >
-        <h2 className="text-3xl font-bold text-center text-gray-900">
-          Become a Donor ❤️
-        </h2>
+        <div className="text-center mb-10">
+          <div className="bg-red-100 dark:bg-red-900/30 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">❤️</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tight leading-tight">
+            Become a <span className="text-red-600">Donor</span>
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm font-medium italic">Join our network of life-savers today! 🩸</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-          {/* NAME */}
-          <Input icon={<FaUser />} name="name" placeholder="Full Name" onChange={handleChange} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input icon={<FaUser />} name="name" placeholder="Full Name" onChange={handleChange} />
+            <Input icon={<FaEnvelope />} name="email" type="email" placeholder="Email Address" onChange={handleChange} />
+          </div>
 
-          {/* EMAIL */}
-          <Input icon={<FaEnvelope />} name="email" placeholder="Email" onChange={handleChange} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input icon={<FaLock />} name="password" type="password" placeholder="Password" onChange={handleChange} />
+            <Input icon={<FaPhone />} name="phone" placeholder="Phone Number" onChange={handleChange} />
+          </div>
 
-          {/* PASSWORD */}
-          <Input icon={<FaLock />} name="password" type="password" placeholder="Password" onChange={handleChange} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative group">
+              <select
+                name="bloodGroup"
+                onChange={handleChange}
+                className="w-full pl-4 pr-10 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-red-500/50 rounded-2xl text-gray-900 dark:text-white appearance-none focus:outline-none transition-all cursor-pointer"
+              >
+                <option value="" className="dark:bg-gray-900">Select Blood Group</option>
+                <option className="dark:bg-gray-900">A+</option>
+                <option className="dark:bg-gray-900">B+</option>
+                <option className="dark:bg-gray-900">O+</option>
+                <option className="dark:bg-gray-900">AB+</option>
+                <option className="dark:bg-gray-900">A-</option>
+                <option className="dark:bg-gray-900">B-</option>
+                <option className="dark:bg-gray-900">O-</option>
+                <option className="dark:bg-gray-900">AB-</option>
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-400">
+                ▼
+              </div>
+            </div>
+            <Input icon={<FaMapMarkerAlt />} name="location" placeholder="Your Location" onChange={handleChange} />
+          </div>
 
-          {/* PHONE */}
-          <Input icon={<FaPhone />} name="phone" placeholder="Phone Number" onChange={handleChange} />
-
-          {/* BLOOD GROUP */}
-          <select
-            name="bloodGroup"
-            onChange={handleChange}
-            className="w-full p-3 border rounded-xl"
-          >
-            <option value="">Select Blood Group</option>
-            <option>A+</option>
-            <option>B+</option>
-            <option>O+</option>
-            <option>AB+</option>
-            <option>A-</option>
-            <option>B-</option>
-            <option>O-</option>
-            <option>AB-</option>
-          </select>
-
-          {/* LOCATION */}
-          <Input icon={<FaMapMarkerAlt />} name="location" placeholder="Location" onChange={handleChange} />
-
-          {/* BUTTON */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             disabled={loading}
-            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg cursor-pointer"
+            className="w-full py-5 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-xl shadow-red-200 dark:shadow-none hover:bg-red-700 transition cursor-pointer disabled:opacity-50"
           >
-            {loading ? "Creating..." : "Register as Donor"}
+            {loading ? "Registering..." : "Create Donor Account"}
           </motion.button>
 
         </form>
 
-        {/* LOGIN LINK */}
-        <p className="text-center text-sm mt-4">
-          Already a donor?{" "}
-          <span
-            onClick={() => router.push("/donor-login")}
-            className="text-red-600 cursor-pointer font-medium"
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-10 font-medium">
+          Already registered?{" "}
+          <Link
+            href="/donor-login"
+            className="text-red-600 dark:text-red-500 font-bold hover:underline"
           >
-            Login
-          </span>
+            Sign In Here
+          </Link>
         </p>
       </motion.div>
     </div>
@@ -132,8 +136,8 @@ export default function DonorRegister() {
 
 // 🔥 reusable input
 const Input = ({ icon, ...props }: any) => (
-  <div className="relative">
-    <span className="absolute top-4 left-3 text-gray-400">{icon}</span>
-    <input {...props} className="w-full pl-10 pr-4 py-3 border rounded-xl" />
+  <div className="relative group">
+    <span className="absolute top-4 left-4 text-gray-400 group-focus-within:text-red-500 transition-colors">{icon}</span>
+    <input {...props} className="w-full pl-12 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-red-500/50 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none transition-all" />
   </div>
 );

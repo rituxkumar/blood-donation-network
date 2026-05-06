@@ -48,48 +48,66 @@ export default function DonorLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-red-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-red-100 dark:from-[#0a0a0a] dark:via-[#111] dark:to-red-950/10 px-4 transition-colors duration-500">
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-8"
+        className="w-full max-w-md bg-white dark:bg-white/5 shadow-2xl dark:shadow-none rounded-[2.5rem] p-10 border border-gray-100 dark:border-white/5 backdrop-blur-xl"
       >
-        <h2 className="text-3xl font-bold text-center text-red-600">
-          Donor Login ❤️
-        </h2>
+        <div className="text-center mb-8">
+          <div className="bg-red-100 dark:bg-red-900/30 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">🩸</span>
+          </div>
+          <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+            Donor Login
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm font-medium italic">Welcome back, Hero! ❤️</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-          <div className="relative">
-            <FaEnvelope className="absolute top-4 left-3 text-gray-400" />
+          <div className="relative group">
+            <FaEnvelope className="absolute top-4 left-4 text-gray-400 group-focus-within:text-red-500 transition-colors" />
             <input
               name="email"
-              placeholder="Email"
+              type="email"
+              placeholder="Email Address"
               onChange={handleChange}
-              className={inputStyle}
+              className="w-full pl-12 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-red-500/50 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none transition-all"
             />
           </div>
 
-          <div className="relative">
-            <FaLock className="absolute top-4 left-3 text-gray-400" />
+          <div className="relative group">
+            <FaLock className="absolute top-4 left-4 text-gray-400 group-focus-within:text-red-500 transition-colors" />
             <input
               type="password"
               name="password"
               placeholder="Password"
               onChange={handleChange}
-              className={inputStyle}
+              className="w-full pl-12 pr-4 py-4 bg-gray-50 dark:bg-white/5 border border-transparent focus:border-red-500/50 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none transition-all"
             />
           </div>
 
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-red-500 to-red-700 text-white font-semibold cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            disabled={loading}
+            className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-xl shadow-red-200 dark:shadow-none hover:bg-red-700 transition cursor-pointer disabled:opacity-50"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Verifying..." : "Access Dashboard"}
           </motion.button>
         </form>
+
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-8 font-medium">
+          New to the network?{" "}
+          <Link
+            href="/donor-register"
+            className="text-red-600 dark:text-red-500 font-bold hover:underline"
+          >
+            Register Now
+          </Link>
+        </p>
       </motion.div>
     </div>
   );
