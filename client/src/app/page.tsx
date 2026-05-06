@@ -1,4 +1,4 @@
-// import EmergencyCTA from "../components/shared/EmergencyCTA";
+
 import Footer from "../components/shared/Footer";
 import Hero from "../components/shared/Hero";
 import HowItWorks from "../components/shared/HowItWorks";
@@ -11,7 +11,7 @@ export default function Home() {
       <Hero />
           <HowItWorks />
           <WhyDonate />
-          {/* <EmergencyCTA /> */}
+      
           <TopDonors/>
           <Footer />
     </main>
