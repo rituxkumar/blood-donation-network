@@ -35,7 +35,7 @@ export default function EmergencyCTA() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 rounded-full bg-white text-red-600 font-semibold shadow-lg hover:bg-gray-100 transition"
+            className="px-8 py-3 rounded-full bg-white text-red-600 font-semibold shadow-lg hover:bg-gray-100 transition cursor-pointer"
           >
             🚑 Request Blood Now
           </motion.button>
@@ -43,7 +43,7 @@ export default function EmergencyCTA() {
           {/* SECONDARY CTA */}
           <motion.button
             whileHover={{ scale: 1.05 }}
-            className="px-8 py-3 rounded-full border border-white/50 text-white backdrop-blur-md hover:bg-white/10 transition"
+            className="px-8 py-3 rounded-full border border-white/50 text-white backdrop-blur-md hover:bg-white/10 transition cursor-pointer"
           >
             ❤️ Become a Donor
           </motion.button>

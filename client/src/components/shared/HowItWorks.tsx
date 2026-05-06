@@ -23,14 +23,14 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 px-6 md:px-12 bg-white relative">
+    <section className="py-24 px-6 md:px-12 bg-white dark:bg-[#0a0a0a] relative transition-colors duration-500">
       
       {/* TITLE */}
       <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white">
           How It Works
         </h2>
-        <p className="text-gray-500 mt-3">
+        <p className="text-gray-500 dark:text-gray-400 mt-4 font-medium text-lg">
           Simple steps to save lives in emergencies
         </p>
       </div>
@@ -45,38 +45,38 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.2 }}
             viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
-            className="bg-white border border-gray-100 shadow-lg rounded-2xl p-8 text-center relative overflow-hidden group"
+            whileHover={{ y: -10 }}
+            className="bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-xl dark:shadow-none rounded-[2.5rem] p-10 text-center relative overflow-hidden group transition-all"
           >
             
             {/* Glow Effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-red-100 to-transparent"></div>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-red-100 to-transparent dark:from-red-900/10 dark:to-transparent"></div>
 
             {/* ICON */}
-            <div className="w-14 h-14 flex items-center justify-center mx-auto mb-4 rounded-full bg-red-100 text-red-600 shadow-md group-hover:scale-110 transition">
+            <div className="w-16 h-16 flex items-center justify-center mx-auto mb-6 rounded-2xl bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 shadow-lg group-hover:scale-110 transition-transform">
               {step.icon}
             </div>
 
             {/* TITLE */}
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest mb-3">
               {step.title}
             </h3>
 
             {/* DESC */}
-            <p className="text-gray-500 text-sm mt-2">
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed">
               {step.desc}
             </p>
 
             {/* STEP NUMBER */}
-            <span className="absolute top-4 right-4 text-gray-200 text-5xl font-bold">
+            <span className="absolute -bottom-4 -right-2 text-gray-100 dark:text-white/5 text-8xl font-black italic select-none">
               {i + 1}
             </span>
           </motion.div>
         ))}
       </div>
 
-      {/* BOTTOM DECOR (optional premium touch) */}
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-red-50 to-transparent"></div>
+      {/* BOTTOM DECOR */}
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-red-50 to-transparent dark:from-red-950/10 dark:to-transparent"></div>
     </section>
   );
 }

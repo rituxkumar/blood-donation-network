@@ -163,7 +163,7 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={addPhone}
-              className="text-red-500 text-sm mt-2 hover:underline"
+              className="text-red-500 text-sm mt-2 hover:underline cursor-pointer"
             >
               + Add another number
             </button>
@@ -233,7 +233,7 @@ export default function RegisterPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={loading}
-            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg"
+            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg cursor-pointer"
           >
             {loading ? "Creating..." : "Create Account"}
           </motion.button>

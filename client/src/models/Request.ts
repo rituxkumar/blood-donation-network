@@ -2,19 +2,45 @@ import mongoose, { Schema } from "mongoose";
 
 const requestSchema = new Schema(
   {
-    bloodGroup: String,
-    units: Number,
-    urgency: String,
+    bloodGroup: {
+      type: String,
+      required: true,
+    },
+
+    units: {
+      type: Number,
+      required: true,
+    },
+
+    urgency: {
+      type: String,
+      enum: ["normal", "emergency"],
+      default: "normal",
+    },
 
     status: {
       type: String,
+      enum: ["pending", "accepted", "fulfilled"],
       default: "pending",
     },
 
-   
+    // 🔥 hospital जिसने request create की
     hospitalId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Hospital",
+      required: true,
+    },
+
+    // 🔥 donor जिसने accept किया
+    acceptedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Donor",
+      default: null,
+    },
+
+    // optional: message / note
+    note: {
+      type: String,
     },
   },
   { timestamps: true }

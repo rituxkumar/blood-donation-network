@@ -42,6 +42,7 @@ export default function LoginPage() {
     if (data.success) {
       // store token
       localStorage.setItem("token", data.token);
+      localStorage.setItem("role", "hospital");
 
       alert("Login successful 🚀");
 
@@ -100,7 +101,7 @@ export default function LoginPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={loading}
-            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg"
+            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg cursor-pointer"
           >
             {loading ? "Logging in..." : "Login"}
           </motion.button>

@@ -49,6 +49,8 @@ export default function DonorRegister() {
 
     if (data.success) {
       localStorage.setItem("token", data.token);
+      localStorage.setItem("role", "donor");
+      localStorage.setItem("bloodGroup", data.donor.bloodGroup);
       router.push("/donor-dashboard");
     } else {
       alert(data.error);
@@ -106,7 +108,7 @@ export default function DonorRegister() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={loading}
-            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg"
+            className="w-full py-3 rounded-full text-white font-semibold bg-gradient-to-r from-red-500 to-red-700 shadow-lg cursor-pointer"
           >
             {loading ? "Creating..." : "Register as Donor"}
           </motion.button>

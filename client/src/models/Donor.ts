@@ -36,6 +36,21 @@ const donorSchema = new Schema(
       type: Boolean,
       default: true,
     },
+
+    image: {
+      url: { type: String },
+      public_id: { type: String },
+    },
+
+    donationsCount: {
+      type: Number,
+      default: 0,
+    },
+
+    totalUnitsDonated: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

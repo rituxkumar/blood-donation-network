@@ -39,6 +39,8 @@ export default function DonorLogin() {
 
     if (data.success) {
       localStorage.setItem("token", data.token);
+      localStorage.setItem("role", "donor");
+      localStorage.setItem("bloodGroup", data.donor.bloodGroup);
       router.push("/donor-dashboard");
     } else {
       alert(data.error);
@@ -83,7 +85,7 @@ export default function DonorLogin() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-red-500 to-red-700 text-white font-semibold"
+            className="w-full py-3 rounded-full bg-gradient-to-r from-red-500 to-red-700 text-white font-semibold cursor-pointer"
           >
             {loading ? "Logging in..." : "Login"}
           </motion.button>

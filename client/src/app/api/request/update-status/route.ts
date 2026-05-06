@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/src/lib/db";
 import Request from "@/src/models/Request";
+import Donor from "@/src/models/Donor";
 import jwt from "jsonwebtoken";
 
 export async function PATCH(req: Request) {
