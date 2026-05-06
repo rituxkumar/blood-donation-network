@@ -199,20 +199,20 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50 dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-red-950/10 p-6 md:p-10 transition-colors duration-500">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col md:flex-row gap-5 md:gap-0 justify-between items-center mb-8">
         <h1 className="text-3xl font-black text-gray-900 dark:text-white">
           Hospital Dashboard 🏥
         </h1>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 cursor-pointer shadow-lg shadow-red-200 dark:shadow-none font-bold transition flex items-center gap-2 "
+          className="bg-red-600 text-white px-18 md:px-6 py-3 rounded-xl hover:bg-red-700 cursor-pointer shadow-lg shadow-red-200 dark:shadow-none font-bold transition flex items-center gap-2 "
         >
           + Create New Request
         </button>
       </div>
 
       {/* 🚀 STATS GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
         {[
           {
             label: "Total Requests",
@@ -268,12 +268,12 @@ export default function Dashboard() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="lg:col-span-2 bg-white dark:bg-white/5 rounded-[2.5rem] shadow-sm p-8 border border-gray-100 dark:border-white/5"
+          className="lg:col-span-2 bg-white dark:bg-white/5 rounded-[2.5rem] shadow-sm p-8 border border-gray-100 dark:border-white/5 w-[95%]"
         >
           <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900 dark:text-white">
             📊 Blood Requirement Analytics
           </h2>
-          <div className="h-80 w-full">
+          <div className="h-80 w-[90%] md:w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
                 <CartesianGrid
@@ -323,7 +323,7 @@ export default function Dashboard() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white dark:bg-white/5 rounded-[2.5rem] shadow-sm p-8 border border-gray-100 dark:border-white/5"
+          className="bg-white dark:bg-white/5 rounded-[2.5rem] shadow-sm p-8 border border-gray-100 dark:border-white/5 w-[95%]"
         >
           <div className="flex flex-col items-center">
             <div className="relative">
@@ -360,9 +360,9 @@ export default function Dashboard() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-3 bg-white dark:bg-white/5 rounded-[2.5rem] shadow-sm p-8 border border-gray-100 dark:border-white/5"
+          className="lg:col-span-3 bg-white dark:bg-white/5 rounded-[2.5rem] shadow-sm p-8 border border-gray-100 dark:border-white/5 w-[95%]"
         >
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-8 ">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
               Recent Blood Requests 🩸
             </h2>
@@ -436,7 +436,7 @@ export default function Dashboard() {
 
       {/* MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-center w-[95%] p-5 ml-3">
           <motion.div
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}

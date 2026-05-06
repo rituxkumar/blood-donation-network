@@ -70,16 +70,6 @@ const Navbar = () => {
           Why Donate?
         </Link>
         
-        {/* THEME TOGGLE */}
-        {mounted && (
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2.5 rounded-2xl bg-gray-100 dark:bg-white/5 text-gray-800 dark:text-yellow-400 hover:scale-110 transition cursor-pointer"
-          >
-            {theme === "dark" ? <FaSun size={18} /> : <FaMoon size={18} />}
-          </button>
-        )}
-
         {isLoggedIn ? (
           <>
             {/* NOTIFICATION BELL */}
@@ -102,7 +92,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 mt-3 w-80 bg-white dark:bg-[#111] shadow-2xl rounded-2xl border border-gray-100 dark:border-white/10 overflow-hidden z-[100]"
+                    className="absolute right-0 mt-3 w-80 bg-white dark:bg-[#111] shadow-2xl rounded-2xl border border-gray-100 dark:border-white/10 overflow-hidden z-100"
                   >
                     <div className="p-4 border-b dark:border-white/10 bg-gray-50 dark:bg-white/5 flex justify-between items-center">
                       <span className="font-bold text-gray-800 dark:text-white">Notifications</span>
@@ -151,12 +141,13 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <div className="flex gap-4">
+          <div className="flex gap-4 bg-black">
             <Link href="/donor-login">
               <button className="px-6 py-2.5 rounded-full border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition font-bold cursor-pointer shadow-sm">
                 Donor Login
               </button>
             </Link>
+
             <Link href="/login">
               <button className="px-6 py-2.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition font-bold shadow-lg cursor-pointer">
                 Hospital Login
@@ -167,7 +158,7 @@ const Navbar = () => {
       </div>
 
       {/* MOBILE MENU TOGGLE */}
-      <div className="flex items-center gap-4 md:hidden">
+      <div className="flex items-center gap-4 md:hidden  ">
         {mounted && (
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -191,7 +182,7 @@ const Navbar = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
-            className="fixed inset-0 top-[73px] bg-white dark:bg-[#0a0a0a] z-40 p-8 flex flex-col gap-6 md:hidden"
+            className="fixed inset-0 top-[73px] bg-black h-full z-40 p-8 flex flex-col gap-6 md:hidden"
           >
             <Link 
               href="/education" 
@@ -221,18 +212,19 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-              <div className="flex flex-col gap-4 mt-4">
-                <Link href="/donor-login" onClick={() => setIsMenuOpen(false)}>
-                  <button className="w-full py-4 rounded-2xl border-2 border-red-600 text-red-600 font-black uppercase tracking-widest">
-                    Donor Login
-                  </button>
-                </Link>
-                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                  <button className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-lg">
-                    Hospital Login
-                  </button>
-                </Link>
-              </div>
+             <div className="flex flex-col gap-4 mt-4 h-full">
+  <Link href="/donor-login" onClick={() => setIsMenuOpen(false)}>
+    <button className="w-full py-4 rounded-2xl border-2 border-red-500 text-red-500 font-black uppercase tracking-widest bg-transparent hover:bg-red-600 hover:text-white transition">
+      Donor Login 
+    </button>
+  </Link>
+
+  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+    <button className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-lg hover:bg-red-700 transition">
+      Hospital Login
+    </button>
+  </Link>
+</div>
             )}
           </motion.div>
         )}

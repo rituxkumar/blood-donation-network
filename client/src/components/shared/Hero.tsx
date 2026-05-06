@@ -146,14 +146,14 @@ export default function Hero() {
         >
           <button
             onClick={handleRequestBlood}
-            className="px-8 py-4 rounded-2xl text-white font-bold bg-gradient-to-r from-red-600 to-red-800 shadow-[0_10px_30px_rgba(239,68,68,0.4)] hover:scale-105 active:scale-95 transition cursor-pointer"
+            className="px-3 md-px-8 py-4 rounded-2xl text-white font-bold bg-gradient-to-r from-red-600 to-red-800 shadow-[0_10px_30px_rgba(239,68,68,0.4)] hover:scale-105 active:scale-95 transition cursor-pointer"
           >
             Request Blood →
           </button>
 
           <button
             onClick={handleBecomeDonor}
-            className="px-8 py-4 rounded-2xl text-gray-900 dark:text-white font-bold border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-md hover:border-red-500 hover:text-red-600 transition cursor-pointer"
+            className="px-3 md-px-8 py-4 rounded-2xl text-gray-900 dark:text-white font-bold border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-md hover:border-red-500 hover:text-red-600 transition cursor-pointer"
           >
             ❤️ Become a Donor
           </button>
@@ -164,7 +164,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="mt-8 flex items-center gap-3"
+          className="mt-20 flex items-center gap-3"
         >
           <div className="flex -space-x-2">
             <img className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800" src="https://i.pravatar.cc/100?img=1" />
@@ -179,7 +179,7 @@ export default function Hero() {
       </div>
 
       {/* STATS */}
-      <div className="absolute bottom-10 left-6 right-6 md:left-12 md:right-12 grid grid-cols-2 md:grid-cols-4 gap-4 z-10">
+      <div className="absolute bottom-[0px] left-6 right-6 md:left-12 md:right-12 grid grid-cols-2 md:grid-cols-4 gap-4 z-10">
         {[
           { title: "1,000+", sub: "Donors" },
           { title: "2,500+", sub: "Donations" },
