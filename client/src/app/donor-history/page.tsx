@@ -60,7 +60,7 @@ function DonorHistoryContent() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-100 dark:from-[#0a0a0a] dark:via-[#111] dark:to-red-950/10 flex flex-col items-center justify-center p-6">
+      <div className="min-h-screen bg-linear-to-br from-red-50 via-white to-red-100 dark:from-[#0a0a0a] dark:via-[#111] dark:to-red-950/10 flex flex-col items-center justify-center p-6">
         <div className="bg-white dark:bg-white/5 p-8 rounded-[2.5rem] shadow-xl border border-red-100 dark:border-white/5 text-center max-w-md">
           <span className="text-6xl mb-4 block">⚠️</span>
           <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">Error Occurred</h2>
@@ -79,7 +79,7 @@ function DonorHistoryContent() {
   const { donor, history } = data;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-red-100 dark:from-[#0a0a0a] dark:via-[#111] dark:to-red-950/10 py-16 px-6 md:px-12 transition-colors duration-500">
+    <div className="min-h-screen bg-linear-to-br from-red-50 via-white to-red-100 dark:from-[#0a0a0a] dark:via-[#111] dark:to-red-950/10 py-16 px-6 md:px-12 transition-colors duration-500">
       <div className="max-w-4xl mx-auto">
         
         {/* BACK BUTTON */}
@@ -102,13 +102,13 @@ function DonorHistoryContent() {
           <div className="flex flex-col md:flex-row gap-8 items-center relative z-10">
             {/* AVATAR WITH BADGE */}
             <div className="relative shrink-0">
-              <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden border-4 border-red-500/20 dark:border-red-500/10 shadow-2xl relative">
-                <img
-                  src={donor.image?.url || `https://i.pravatar.cc/150?img=25`}
-                  alt={donor.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+
+ <div className="w-20 h-20 mx-auto rounded-full border-4 border-red-500/20 dark:border-red-500/30 shadow-lg   flex items-center justify-center text-white font-black text-3xl select-none bg-grey-600">
+              {donor.name ? donor.name.charAt(0).toUpperCase() : "D"}
+            </div>
+
+
+              
               <span className="absolute -bottom-2 -right-2 bg-red-600 text-white p-3 rounded-2xl shadow-xl flex items-center justify-center text-lg">
                 <FaMedal />
               </span>
