@@ -159,14 +159,14 @@ const Navbar = () => {
 
       {/* MOBILE MENU TOGGLE */}
       <div className="flex items-center gap-4 md:hidden  ">
-        {mounted && (
+        {/* {mounted && (
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="p-2 rounded-xl bg-gray-100 dark:bg-white/5 text-gray-800 dark:text-yellow-400"
           >
             {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
           </button>
-        )}
+        )} */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2 text-gray-600 dark:text-white cursor-pointer"
@@ -176,18 +176,19 @@ const Navbar = () => {
       </div>
 
       {/* MOBILE MENU OVERLAY */}
-      <AnimatePresence>
+      <AnimatePresence >
+    
         {isMenuOpen && (
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
-            className="fixed inset-0 top-[73px] bg-black h-full z-40 p-8 flex flex-col gap-6 md:hidden"
+            className="fixed inset-0 top-[73px] bg-zinc-900 h-[calc(100vh-73px)] z-40 p-8 flex flex-col gap-6 md:hidden"
           >
             <Link 
               href="/education" 
               onClick={() => setIsMenuOpen(false)}
-              className="text-2xl font-black text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4"
+              className="text-2xl font-black text-white border-b border-white/10 pb-4"
             >
               Why Donate?
             </Link>
@@ -197,7 +198,7 @@ const Navbar = () => {
                 <Link 
                   href={localStorage.getItem("role") === "donor" ? "/donor-dashboard" : "/dashboard"} 
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-2xl font-black text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 pb-4"
+                  className="text-2xl font-black text-white border-b border-white/10 pb-4"
                 >
                   Dashboard
                 </Link>
@@ -206,25 +207,25 @@ const Navbar = () => {
                     handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest text-center"
+                  className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest text-center cursor-pointer"
                 >
                   Logout
                 </button>
               </>
             ) : (
-             <div className="flex flex-col gap-4 mt-4 h-full">
-  <Link href="/donor-login" onClick={() => setIsMenuOpen(false)}>
-    <button className="w-full py-4 rounded-2xl border-2 border-red-500 text-red-500 font-black uppercase tracking-widest bg-transparent hover:bg-red-600 hover:text-white transition">
-      Donor Login 
-    </button>
-  </Link>
+              <div className="flex flex-col gap-4 mt-4 h-full bg-transparent">
+                <Link href="/donor-login" onClick={() => setIsMenuOpen(false)}>
+                  <button className="w-full py-4 rounded-2xl border-2 border-red-500 text-red-500 font-black uppercase tracking-widest bg-transparent hover:bg-red-600 hover:text-white transition cursor-pointer">
+                    Donor Login 
+                  </button>
+                </Link>
 
-  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-    <button className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-lg hover:bg-red-700 transition">
-      Hospital Login
-    </button>
-  </Link>
-</div>
+                <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                  <button className="w-full py-4 rounded-2xl bg-red-600 text-white font-black uppercase tracking-widest shadow-lg hover:bg-red-700 transition cursor-pointer">
+                    Hospital Login
+                  </button>
+                </Link>
+              </div>
             )}
           </motion.div>
         )}
