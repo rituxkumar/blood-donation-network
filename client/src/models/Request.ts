@@ -24,14 +24,14 @@ const requestSchema = new Schema(
       default: "pending",
     },
 
-    // 🔥 hospital जिसने request create की
+    
     hospitalId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Hospital",
       required: true,
     },
 
-    // 🔥 donor जिसने accept किया
+   
     acceptedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Donor",

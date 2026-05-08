@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function TopDonors() {
   const [donors, setDonors] = useState<any[]>([]);
@@ -69,17 +70,15 @@ export default function TopDonors() {
             
             {/* TOP BADGE */}
             {i === 0 && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gray-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
                 Top Donor 🏆
               </span>
             )}
 
-            {/* AVATAR */}
-            <img
-              src={donor.image?.url || `https://i.pravatar.cc/100?img=${i + 20}`}
-              alt={donor.name}
-              className="w-20 h-20 mx-auto rounded-full border-4 border-red-50 dark:border-red-900/30 shadow-lg object-cover"
-            />
+            {/* AVATAR (FIRST LETTER LOGO) */}
+            <div className="w-20 h-20 mx-auto rounded-full border-4 border-red-500/20 dark:border-red-500/30 shadow-lg bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white font-black text-3xl select-none">
+              {donor.name ? donor.name.charAt(0).toUpperCase() : "D"}
+            </div>
 
             {/* NAME */}
             <h3 className="mt-5 font-black text-gray-900 dark:text-white uppercase tracking-widest text-[10px]">
@@ -87,15 +86,23 @@ export default function TopDonors() {
             </h3>
 
             {/* LOCATION */}
-            <p className="text-xs text-gray-400 dark:text-gray-500 font-bold mt-1 uppercase">{donor.location}</p>
+            <p className="text-xs text-yellow-400 font-bold mt-1 uppercase">{donor.location}</p>
 
             {/* UNITS */}
-            <p className="mt-4 text-red-600 dark:text-red-500 font-black text-2xl">
+            <p className="mt-4 text-red-600 dark:text-red-500 font-black text-2xl ">
               {donor.totalUnitsDonated || 0}
             </p>
 
             {/* LABEL */}
-            <p className="text-[10px] text-gray-400 dark:text-gray-600 font-bold uppercase tracking-tighter">Units Donated</p>
+            <p className="text-[10px] text-white font-bold uppercase tracking-tighter">Units Donated</p>
+
+            {/* VIEW HISTORY BUTTON */}
+            <Link 
+              href={`/donor-history?donorId=${donor._id}`}
+              className="mt-6 block w-full py-2.5 rounded-2xl bg-red-50 hover:bg-red-600 dark:bg-white/5 dark:hover:bg-red-600 text-red-600 dark:text-red-400 hover:text-white dark:hover:text-white text-xs font-black uppercase tracking-widest transition-all cursor-pointer border border-transparent hover:shadow-lg shadow-red-100 dark:shadow-none"
+            >
+              View History 🩸
+            </Link>
           </motion.div>
         ))}
       </div>
